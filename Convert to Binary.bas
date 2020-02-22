@@ -66,6 +66,7 @@ DIM SHARED CONVERTBT AS LONG
 DIM SHARED SaveBT AS LONG
 DIM SHARED OutputFileTB AS LONG
 DIM SHARED ListBox1 AS LONG
+DIM SHARED ClearLogBT AS LONG
 '$INCLUDE:'InForm\InForm.ui'
 '$INCLUDE:'InForm\xp.uitheme'
 '$INCLUDE:'Convert to Binary.frm'
@@ -86,12 +87,26 @@ SUB __UI_OnLoad
         END IF
         Control(CONVERTBT).Disabled = False
     END IF
+    _ACCEPTFILEDROP
+    AddItem ListBox1, "Open a file above or drag and drop."
+    AddItem ListBox1, "File can be any type or any size up to 9 gigabytes."
+    AddItem ListBox1, "Output size will be 30-33% larger than input file."
+    AddItem ListBox1, "Output files might not compile due to memory errors."
+    AddItem ListBox1, "To compile a file that is creating memory errors,"
+    AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2BAS64"
 END SUB
 
 SUB __UI_BeforeUpdateDisplay
     'This event occurs at approximately 30 frames per second.
     'You can change the update frequency by calling SetFrameRate DesiredRate%
-
+    IF _TOTALDROPPEDFILES THEN
+        drop$ = _DROPPEDFILE
+        IF _FILEEXISTS(drop$) THEN
+            Text(SelectedFileTB) = drop$
+            Text(OutputFileTB) = drop$ + ".bin.bas"
+            Control(CONVERTBT).Disabled = False
+        END IF
+    END IF
 END SUB
 
 SUB __UI_BeforeUnload
@@ -116,11 +131,11 @@ SUB __UI_Click (id AS LONG)
             IF OFile$ <> "" THEN
                 Control(CONVERTBT).Disabled = False
                 Text(SelectedFileTB) = OFile$
-                IF INSTR(OFile$, ".") THEN
-                    Text(OutputFileTB) = LEFT$(OFile$, LEN(OFile$) - 3) + "bin.bas"
-                ELSE
-                    Text(OutputFileTB) = OFile$ + "bin.bas"
-                END IF
+                'IF INSTR(OFile$, ".") THEN
+                '    Text(OutputFileTB) = LEFT$(OFile$, LEN(OFile$) - 3) + "bin.bas"
+                'ELSE
+                Text(OutputFileTB) = OFile$ + ".bin.bas"
+                'END IF
 
             ELSE
                 Text(SelectedFileTB) = ""
@@ -131,6 +146,8 @@ SUB __UI_Click (id AS LONG)
 
         CASE ListBox1
 
+        CASE ClearLogBT
+            ResetList ListBox1
     END SELECT
 END SUB
 
@@ -283,78 +300,68 @@ SUB __UI_FormResized
 
 END SUB
 FUNCTION bin2bas (IN$, OUT$)
-    ResetList ListBox1
     OPEN IN$ FOR BINARY AS 1
     IF LOF(1) = 0 THEN
         CLOSE
-    else
-    OPEN OUT$ FOR OUTPUT AS 2
-    AddItem ListBox1, TIME$ + ": Opening file: " + IN$
-    Q$ = CHR$(34) 'quotation mark
-    AddItem ListBox1, TIME$ + ": Processing file..."
-    PRINT #2, "A$ = "; Q$; Q$
-    PRINT #2, "A$ = A$ + "; Q$;
-    AddItem ListBox1, TIME$ + ": Converting lines..."
-    x = 1
-    DO
-        s = s + 1
-        a$ = INPUT$(3, 1)
-        BC& = BC& + 3: LL& = LL& + 4
-        IF LL& = 60 THEN
-            LL& = 0
-            PRINT #2, E$(a$);: PRINT #2, Q$
-            PRINT #2, "A$ = A$ + "; Q$;
-        ELSE
-            PRINT #2, E$(a$);
-        END IF
-        IF LOF(1) - BC& < 3 THEN
-            a$ = INPUT$(LOF(1) - BC&, 1): B$ = E$(a$)
-            SELECT CASE LEN(B$)
-                CASE 0: a$ = Q$
-                CASE 1: a$ = "%%%" + B$ + Q$
-                CASE 2: a$ = "%%" + B$ + Q$
-                CASE 3: a$ = "%" + B$ + Q$
-            END SELECT: PRINT #2, a$;: EXIT DO
-        END IF
-        IF s = 1 THEN
-            ReplaceItem ListBox1, 3, TIME$ + ": Converting lines...\"
-        ELSEIF s = 2 THEN
-            ReplaceItem ListBox1, 3, TIME$ + ": Converting lines...|"
-        ELSEIF s = 3 THEN
-            ReplaceItem ListBox1, 3, TIME$ + ": Converting lines.../"
-        ELSE
-            ReplaceItem ListBox1, 3, TIME$ + ": Converting lines...--"
-            s = 1
-        END IF
-        x = x + 1
-    LOOP: PRINT #2, ""
-    AddItem ListBox1, TIME$ + ": DONE"
-    AddItem ListBox1, TIME$ + ": Writing decoding function to file..."
-    PRINT #2, "btemp$="; Q$; Q$
-    PRINT #2, "FOR i&=1TO LEN(A$) STEP 4:B$=MID$(A$,i&,4)"
-    PRINT #2, "IF INSTR(1,B$,"; Q$; "%"; Q$; ") THEN"
-    PRINT #2, "FOR C%=1 TO LEN(B$):F$=MID$(B$,C%,1)"
-    PRINT #2, "IF F$<>"; Q$; "%"; Q$; "THEN C$=C$+F$"
-    PRINT #2, "NEXT:B$=C$"
-    PRINT #2, "END IF:FOR t%=LEN(B$) TO 1 STEP-1"
-    PRINT #2, "B&=B&*64+ASC(MID$(B$,t%))-48"
-    PRINT #2, "NEXT:X$="; Q$; Q$; ":FOR t%=1 TO LEN(B$)-1"
-    PRINT #2, "X$=X$+CHR$(B& AND 255):B&=B&\256"
-    PRINT #2, "NEXT:btemp$=btemp$+X$:NEXT"
-    PRINT #2, "BASFILE$=btemp$:btemp$="; Q$; Q$
-    PRINT #2, "IF _FILEEXISTS(" + Q$ + StripDirectory$(IN$) + Q$ + ") = 0 THEN"
-    PRINT #2, "OPEN "; Q$; StripDirectory$(IN$); Q$; " FOR OUTPUT AS #1"
-    PRINT #2, "PRINT #1, BASFILE$;"
-    PRINT #2, "CLOSE #1"
-    PRINT #2, "END IF"
-    CLOSE #1
-    CLOSE #2
-    AddItem ListBox1, TIME$ + ": DONE"
-    AddItem ListBox1, TIME$ + ": File exported to " + OUT$
-    Text(SelectedFileTB) = ""
-    Text(OutputFileTB) = ""
-    Control(CONVERTBT).Disabled = True
-    end if
+    ELSE
+        OPEN OUT$ FOR OUTPUT AS 2
+        Q$ = CHR$(34) 'quotation mark
+        PRINT #2, "IF _FILEEXISTS(" + Q$ + StripDirectory$(IN$) + Q$ + ") = 0 THEN"
+        AddItem ListBox1, TIME$ + ": Opening file: " + IN$
+        AddItem ListBox1, TIME$ + ": Processing file..."
+        'PRINT #2, "#lang "; Q$; "qb"; Q$
+        PRINT #2, "A$ = "; Q$; Q$
+        PRINT #2, "A$ = A$ + "; Q$;
+        AddItem ListBox1, TIME$ + ": Converting lines..."
+        DO
+            s = s + 1
+            a$ = INPUT$(3, 1)
+            BC& = BC& + 3: LL& = LL& + 4
+            IF LL& = 60 THEN
+                LL& = 0
+                PRINT #2, E$(a$);: PRINT #2, Q$
+                PRINT #2, "A$ = A$ + "; Q$;
+            ELSE
+                PRINT #2, E$(a$);
+            END IF
+            IF LOF(1) - BC& < 3 THEN
+                a$ = INPUT$(LOF(1) - BC&, 1): B$ = E$(a$)
+                SELECT CASE LEN(B$)
+                    CASE 0: a$ = Q$
+                    CASE 1: a$ = "%%%" + B$ + Q$
+                    CASE 2: a$ = "%%" + B$ + Q$
+                    CASE 3: a$ = "%" + B$ + Q$
+                END SELECT: PRINT #2, a$;: EXIT DO
+            END IF
+        LOOP: PRINT #2, ""
+        AddItem ListBox1, TIME$ + ": DONE"
+        AddItem ListBox1, TIME$ + ": Writing decoding function to file..."
+        PRINT #2, "btemp$="; Q$; Q$
+        PRINT #2, "FOR i&=1TO LEN(A$) STEP 4:B$=MID$(A$,i&,4)"
+        PRINT #2, "IF INSTR(1,B$,"; Q$; "%"; Q$; ") THEN"
+        PRINT #2, "FOR C%=1 TO LEN(B$):F$=MID$(B$,C%,1)"
+        PRINT #2, "IF F$<>"; Q$; "%"; Q$; "THEN C$=C$+F$"
+        PRINT #2, "NEXT:B$=C$"
+        PRINT #2, "END IF:FOR t%=LEN(B$) TO 1 STEP-1"
+        PRINT #2, "B&=B&*64+ASC(MID$(B$,t%))-48"
+        PRINT #2, "NEXT:X$="; Q$; Q$; ":FOR t%=1 TO LEN(B$)-1"
+        PRINT #2, "X$=X$+CHR$(B& AND 255):B&=B&\256"
+        PRINT #2, "NEXT:btemp$=btemp$+X$:NEXT"
+        PRINT #2, "BASFILE$=btemp$:btemp$="; Q$; Q$
+        PRINT #2, "A$ = "; Q$; Q$
+        PRINT #2, "B$ = "; Q$; Q$
+        PRINT #2, "OPEN "; Q$; StripDirectory$(IN$); Q$; " FOR OUTPUT AS #1"
+        PRINT #2, "PRINT #1, BASFILE$;"
+        PRINT #2, "CLOSE #1"
+        PRINT #2, "END IF"
+        CLOSE #1
+        CLOSE #2
+        AddItem ListBox1, TIME$ + ": DONE"
+        AddItem ListBox1, TIME$ + ": File exported to " + OUT$
+        Text(SelectedFileTB) = ""
+        Text(OutputFileTB) = ""
+        Control(CONVERTBT).Disabled = True
+    END IF
 END FUNCTION
 
 FUNCTION E$ (B$)
