@@ -51,10 +51,6 @@ DECLARE DYNAMIC LIBRARY "comdlg32" ' Library declarations using _OFFSET types
     FUNCTION GetSaveFileNameA& (DIALOGPARAMS AS FILEDIALOGTYPE) ' The Save file dialog
 END DECLARE
 
-DECLARE LIBRARY
-    FUNCTION FindWindow& (BYVAL ClassName AS _OFFSET, WindowName$) ' To get hWnd handle
-END DECLARE
-
 DEFINT A-Z
 DECLARE FUNCTION E$ (B$)
 
@@ -123,9 +119,7 @@ SUB __UI_Click (id AS LONG)
         CASE SelectedFileTB
 
         CASE OpenBT
-            DO
-                hWnd& = FindWindow(0, "Convert to Binary" + CHR$(0)) 'get window handle using _TITLE string
-            LOOP UNTIL hWnd&
+            hWnd& = _WINDOWHANDLE
             Filter$ = "All files (*.*)|*.*"
             Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
             OFile$ = GetOpenFileName$("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
