@@ -3,6 +3,7 @@
 ': Fellippe Heitor, 2016-2018 - fellippe@qb64.org - @fellippeheitor
 ': https://github.com/FellippeHeitor/InForm
 '-----------------------------------------------------------
+'$INCLUDE:'binary-icon-11870-Windows.ico.bin.bas'
 ' Dialog flag constants (use + or OR to use more than 1 flag value)
 CONST OFN_ALLOWMULTISELECT = &H200& '  Allows the user to select more than one file, not recommended!
 CONST OFN_CREATEPROMPT = &H2000& '     Prompts if a file not found should be created(GetOpenFileName only).
