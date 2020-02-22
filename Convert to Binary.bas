@@ -77,11 +77,7 @@ SUB __UI_OnLoad
     SetFrameRate 60
     IF COMMAND$ <> "" THEN
         Text(SelectedFileTB) = COMMAND$
-        IF INSTR(COMMAND$, ".") THEN
-            Text(OutputFileTB) = LEFT$(COMMAND$, LEN(COMMAND$) - 3) + "bin.bas"
-        ELSE
-            Text(OutputFileTB) = COMMAND$ + "bin.bas"
-        END IF
+        Text(OutputFileTB) = COMMAND$ + ".bin.bas"
         Control(CONVERTBT).Disabled = False
     END IF
     _ACCEPTFILEDROP
@@ -126,12 +122,7 @@ SUB __UI_Click (id AS LONG)
             IF OFile$ <> "" THEN
                 Control(CONVERTBT).Disabled = False
                 Text(SelectedFileTB) = OFile$
-                'IF INSTR(OFile$, ".") THEN
-                '    Text(OutputFileTB) = LEFT$(OFile$, LEN(OFile$) - 3) + "bin.bas"
-                'ELSE
                 Text(OutputFileTB) = OFile$ + ".bin.bas"
-                'END IF
-
             ELSE
                 Text(SelectedFileTB) = ""
             END IF
