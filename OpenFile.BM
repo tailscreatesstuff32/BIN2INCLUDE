@@ -1,0 +1,74 @@
+$IF 32BIT THEN
+    FUNCTION GetOpenFileName$ (Title$, InitialDir$, Filter$, FilterIndex, Flags&, hWnd&)
+        '  Title$      - The dialog title.
+        '  InitialDir$ - If this left blank, it will use the directory where the last opened file is
+        '  located. Specify ".\" if you want to always use the current directory.
+        '  Filter$     - File filters separated by pipes (|) in the same format as using VB6 common dialogs.
+        '  FilterIndex - The initial file filter to use. Will be altered by user during the call.
+        '  Flags&      - Dialog flags. Will be altered by the user during the call.
+        '  hWnd&       - Your program's window handle that should be aquired by the FindWindow function.
+        '
+        ' Returns: Blank when cancel is clicked otherwise, the file name selected by the user.
+        ' FilterIndex and Flags& will be changed depending on the user's selections.
+        Title$ = Title$ + CHR$(0)
+    DIM OpenCall AS FILEDIALOGTYPE ' Needed for dialog call
+
+    fFilter$ = Filter$
+    FOR R = 1 TO LEN(fFilter$) ' Replace the pipes with character zero
+    IF MID$(fFilter$, R, 1) = "|" THEN MID$(fFilter$, R, 1) = CHR$(0)
+    NEXT R
+    fFilter$ = fFilter$ + CHR$(0)
+
+    lpstrFile$ = STRING$(2048, 0) ' For the returned file name
+    lpstrDefExt$ = STRING$(10, 0) ' Extension will not be added when this is not specified
+    OpenCall.lStructSize = LEN(OpenCall)
+    OpenCall.hwndOwner = hWnd&
+    OpenCall.lpstrFilter = _OFFSET(fFilter$)
+    OpenCall.nFilterIndex = FilterIndex
+    OpenCall.lpstrFile = _OFFSET(lpstrFile$)
+    OpenCall.nMaxFile = LEN(lpstrFile$) - 1
+    OpenCall.lpstrFileTitle = OpenCall.lpstrFile
+    OpenCall.nMaxFileTitle = OpenCall.nMaxFile
+    OpenCall.lpstrInitialDir = _OFFSET(InitialDir$)
+    OpenCall.lpstrTitle = _OFFSET(Title$)
+    OpenCall.lpstrDefExt = _OFFSET(lpstrDefExt$)
+    OpenCall.flags = Flags&
+
+    Result = GetOpenFileNameA&(OpenCall) '            Do Open File dialog call!
+
+    IF Result THEN ' Trim the remaining zeros
+    GetOpenFileName$ = LEFT$(lpstrFile$, INSTR(lpstrFile$, CHR$(0)) - 1)
+    Flags& = OpenCall.flags
+    FilterIndex = OpenCall.nFilterIndex
+    END IF
+
+    END FUNCTION
+$ELSE
+FUNCTION GetOpenFileName64$ (Title$, InitialDir$, Filter$)
+    SHELL$ = "PowerShell -WindowStyle Hidden -ExecutionPolicy Bypass " + CHR$(34) + "&'" + _STARTDIR$ + "\OpenFile.ps1'"
+    SHELL$ = SHELL$ + " " + "\" + CHR$(34) + Title$ + "\" + CHR$(34)
+    IF INSTR(InitialDir$, "\") THEN
+        InitialDir$ = ReplaceStringItem(InitialDir$, "\", "/")
+    END IF
+    SHELL$ = SHELL$ + " " + "\" + CHR$(34) + InitialDir$ + "\" + CHR$(34)
+    IF INSTR(Filter$, "|") THEN
+        Filter$ = ReplaceStringItem(Filter$, "|", "^/^")
+        'Filter$ = ReplaceStringItem(Filter$, "/", "|")
+    END IF
+    SHELL$ = SHELL$ + " " + "\" + CHR$(34) + Filter$ + "\" + CHR$(34)
+    SHELL$ = SHELL$ + ";exit $LASTEXITCODE" + CHR$(34)
+    a = _SHELLHIDE(SHELL$)
+    '_ECHO SHELL$
+    IF a = 1 THEN
+        F = FREEFILE
+        OPEN "openfilename.txt" FOR BINARY AS #F
+        LINE INPUT #F, OFile$
+        CLOSE #F
+        OFile$ = RIGHT$(OFile$, LEN(OFile$) - 3)
+        GetOpenFileName64 = OFile$
+    ELSE
+        GetOpenFileName64 = ""
+        '    PRINT "Cancelled"
+    END IF
+END FUNCTION
+$END IF

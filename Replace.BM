@@ -1,0 +1,16 @@
+FUNCTION ReplaceStringItem$ (text$, old$, new$)
+    DIM find
+    DIM start
+    DIM first$
+    DIM last$
+    DO
+        find = INSTR(start + 1, text$, old$) 'find location of a word in text
+        IF find THEN
+            first$ = LEFT$(text$, find - 1) 'text before word including spaces
+            last$ = RIGHT$(text$, LEN(text$) - (find + LEN(old$) - 1)) 'text after word
+            text$ = first$ + new$ + last$
+        END IF
+        start = find
+    LOOP WHILE find
+    ReplaceStringItem = text$
+END FUNCTION
