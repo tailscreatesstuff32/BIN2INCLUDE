@@ -7,7 +7,7 @@
 '_CONSOLE ON
 '$INCLUDE:'binary-icon-11870-Windows.ico.bin.bas'
 ' Dialog flag constants (use + or OR to use more than 1 flag value)
-'$INCLUDE:'OpenFile.BI'
+'$INCLUDE:'Open-SaveFile.BI'
 DEFINT A-Z
 DECLARE FUNCTION E$ (B$)
 
