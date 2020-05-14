@@ -258,7 +258,7 @@ FUNCTION bin2bas (IN$, OUT$)
         INDATA$ = _DEFLATE$(INDATA$)
         OPEN OUT$ FOR OUTPUT AS 2
         Q$ = CHR$(34) 'quotation mark
-        PRINT #2, "IF _FILEEXISTS(" + Q$ + StripDirectory$(IN$) + Q$ + ") = 0 THEN"
+        PRINT #2, "IF _FILEEXISTS(" + Q$ + StripDirectory$(IN$) + Q$ + ") = 0 THEN 'remove this line if you are compiling in FreeBasic"
         AddItem ListBox1, TIME$ + ": Opening file: " + IN$
         AddItem ListBox1, TIME$ + ": Processing file..."
         PRINT #2, "'#lang "; Q$; "qb"; Q$
@@ -304,7 +304,7 @@ FUNCTION bin2bas (IN$, OUT$)
         PRINT #2, "OPEN "; Q$; IN$; Q$; " FOR OUTPUT AS #1"
         PRINT #2, "PRINT #1, BASFILE$;"
         PRINT #2, "CLOSE #1"
-        PRINT #2, "END IF"
+        PRINT #2, "END IF 'remove this line if you are compiling in FreeBasic"
         CLOSE #1
         CLOSE #2
         AddItem ListBox1, TIME$ + ": DONE"
