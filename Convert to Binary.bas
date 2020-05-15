@@ -261,7 +261,8 @@ FUNCTION bin2bas (IN$, OUT$)
         PRINT #2, "IF _FILEEXISTS(" + Q$ + StripDirectory$(IN$) + Q$ + ") = 0 THEN 'remove this line if you are compiling in FreeBasic"
         AddItem ListBox1, TIME$ + ": Opening file: " + IN$
         AddItem ListBox1, TIME$ + ": Processing file..."
-        PRINT #2, "'#lang "; Q$; "qb"; Q$
+        PRINT #2, "'#lang "; Q$; "qb"; Q$; " 'uncomment this line if compiling in FreeBasic"
+        PRINT #2, "DIM A$"
         PRINT #2, "A$ = "; Q$; Q$
         PRINT #2, "A$ = A$ + "; Q$;
         AddItem ListBox1, TIME$ + ": Converting lines..."
@@ -289,6 +290,16 @@ FUNCTION bin2bas (IN$, OUT$)
         LOOP: PRINT #2, ""
         AddItem ListBox1, TIME$ + ": DONE"
         AddItem ListBox1, TIME$ + ": Writing decoding function to file..."
+        PRINT #2, "DIM btemp$"
+        PRINT #2, "DIM i&"
+        PRINT #2, "DIM B$"
+        PRINT #2, "DIM C%"
+        PRINT #2, "DIM F$"
+        PRINT #2, "DIM C$"
+        PRINT #2, "DIM t%"
+        PRINT #2, "DIM B&"
+        PRINT #2, "DIM X$"
+        PRINT #2, "DIM BASFILE$"
         PRINT #2, "btemp$="; Q$; Q$
         PRINT #2, "FOR i&=1TO LEN(A$) STEP 4:B$=MID$(A$,i&,4)"
         PRINT #2, "IF INSTR(1,B$,"; Q$; "%"; Q$; ") THEN"
@@ -316,6 +327,10 @@ FUNCTION bin2bas (IN$, OUT$)
 END FUNCTION
 
 FUNCTION E$ (B$)
+    DIM T%
+    DIM B&
+    DIM a$
+    DIM g$
     FOR T% = LEN(B$) TO 1 STEP -1
         B& = B& * 256 + ASC(MID$(B$, T%))
     NEXT
