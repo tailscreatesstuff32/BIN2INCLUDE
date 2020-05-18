@@ -79,37 +79,47 @@ SUB __UI_Click (id AS LONG)
         CASE SelectedFileTB
 
         CASE OpenBT
-        IF Control(BIN2BASRB).Value = True THEN
-            $IF 32BIT THEN
-                hWnd& = _WINDOWHANDLE
-                Filter$ = "All files (*.*)|*.*"
-                Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
-                OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
-            $ELSE
-                OFile$ = GetOpenFileName64("Open File", ".\", "All files (*.*)|*.*")
-            $END IF
-            elseif Control(PIC2MEMRB).Value = True THEN
-            $IF 32BIT THEN
-                hWnd& = _WINDOWHANDLE
-                Filter$ = "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF"
-                Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
-                OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
-            $ELSE
-                OFile$ = GetOpenFileName64("Open File", ".\", "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF")
-            $END IF
-            end if
+            IF Control(BIN2BASRB).Value = True THEN
+                $IF 32BIT THEN
+                    hWnd& = _WINDOWHANDLE
+                    Filter$ = "All files (*.*)|*.*"
+                    Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
+                    OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
+                $ELSE
+                    OFile$ = GetOpenFileName64("Open File", ".\", "All files (*.*)|*.*")
+                $END IF
+                Control(PIC2MEMRB).Disabled = True
+            ELSEIF Control(PIC2MEMRB).Value = True THEN
+                $IF 32BIT THEN
+                    hWnd& = _WINDOWHANDLE
+                    Filter$ = "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF"
+                    Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
+                    OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
+                $ELSE
+                    OFile$ = GetOpenFileName64("Open File", ".\", "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF")
+                $END IF
+                Control(BIN2BASRB).Disabled = True
+            END IF
             IF OFile$ <> "" THEN
-                Control(CONVERTBT).Disabled = False
-                Text(SelectedFileTB) = OFile$
-                Text(OutputFileTB) = OFile$ + ".bin.bas"
+                IF checkExt(OFile$) = 0 THEN
+                    IF Control(PIC2MEMRB).Value = True THEN
+                        Answer = MessageBox("Unsupported file type for PIC2MEM", "", MsgBox_OkOnly + MsgBox_Exclamation)
+                    END IF
+                END IF
+                        Control(CONVERTBT).Disabled = False
+                        Text(SelectedFileTB) = OFile$
+                        Text(OutputFileTB) = OFile$ + ".bin.bas"
+
             ELSE
                 Text(SelectedFileTB) = ""
             END IF
         CASE CONVERTBT
             IF Control(BIN2BASRB).Value = True THEN
                 a = bin2bas(Text(SelectedFileTB), Text(OutputFileTB))
+                Control(PIC2MEMRB).Disabled = False
             ELSEIF Control(PIC2MEMRB).Value = True THEN
                 a = pic2mem(Text(SelectedFileTB), Text(OutputFileTB))
+                Control(BIN2BASRB).Disabled = False
             ELSE
                 Answer = MessageBox("Select an option, first", "BIN2BAS or PIC2MEM?", MsgBox_OkOnly + MsgBox_Exclamation)
             END IF
@@ -375,6 +385,17 @@ FUNCTION pic2mem (IN$, OUT$)
         AddItem ListBox1, TIME$ + ": Image could not be converted. Try again"
     END IF
     pic2mem = a
+END FUNCTION
+
+FUNCTION checkExt (OFile$)
+    '*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF"
+    IF UCASE$(RIGHT$(OFile$,  4)) <> ".BMP" AND UCASE$(RIGHT$(OFile$,  4)) <> ".JPG" _
+    AND UCASE$(RIGHT$(OFile$, 4)) <> ".PNG" AND UCASE$(RIGHT$(OFile$,  5)) <> ".JPEG" _
+    AND UCASE$(RIGHT$(OFile$,  4)) <> ".GIF" THEN
+        checkExt = 0
+    ELSE
+        checkExt = 1
+    END IF
 END FUNCTION
 
 FUNCTION E$ (B$)
