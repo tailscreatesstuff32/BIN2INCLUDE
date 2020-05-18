@@ -7,4 +7,4 @@ QB64, in which this program was written, can handle files up to 9 gigabytes. Whi
 This is now a viable option for zipping a file! Thanks, Dav!
 
 # SOLUTION TO MEMORY ISSUE:
-You can compile the code that this program creates by uncommenting #lang "qb" and removing the line with the IF FILEEXISTS and the corresponding line with the END IF. You can then compile the code in FreeBasic and it can handle larger files than QB64 is able to.
+If necessary, you can compile the code that this program creates by uncommenting #lang "qb" and removing the line with the IF FILEEXISTS and the corresponding line with the END IF. You can then compile the code in FreeBasic and it can handle larger files than QB64 is able to.
