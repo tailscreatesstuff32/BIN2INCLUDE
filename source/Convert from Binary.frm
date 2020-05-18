@@ -7,13 +7,13 @@ SUB __UI_LoadForm
 
     DIM __UI_NewID AS LONG
 
-    __UI_NewID = __UI_NewControl(__UI_Type_Form, "ConvertToBinary", 571, 324, 0, 0, 0)
+    __UI_NewID = __UI_NewControl(__UI_Type_Form, "ConvertToBinary", 589, 324, 0, 0, 0)
     __UI_RegisterResult = 0
     SetCaption __UI_NewID, "Convert from Binary"
     Control(__UI_NewID).Font = SetFont("segoeui.ttf", 12)
     Control(__UI_NewID).CenteredWindow = True
 
-    __UI_NewID = __UI_NewControl(__UI_Type_TextBox, "SelectedFileTB", 544, 23, 14, 10, 0)
+    __UI_NewID = __UI_NewControl(__UI_Type_TextBox, "SelectedFileTB", 567, 23, 11, 10, 0)
     __UI_RegisterResult = 0
     SetCaption __UI_NewID, "Selected File"
     Control(__UI_NewID).HasBorder = True
@@ -21,18 +21,18 @@ SUB __UI_LoadForm
     Control(__UI_NewID).Disabled = True
     Control(__UI_NewID).BorderSize = 1
 
-    __UI_NewID = __UI_NewControl(__UI_Type_Button, "OpenBT", 80, 23, 14, 78, 0)
+    __UI_NewID = __UI_NewControl(__UI_Type_Button, "OpenBT", 80, 23, 11, 78, 0)
     __UI_RegisterResult = 0
     SetCaption __UI_NewID, "Open"
     Control(__UI_NewID).CanHaveFocus = True
 
-    __UI_NewID = __UI_NewControl(__UI_Type_Button, "CONVERTBT", 80, 23, 99, 78, 0)
+    __UI_NewID = __UI_NewControl(__UI_Type_Button, "CONVERTBT", 80, 23, 96, 78, 0)
     __UI_RegisterResult = 0
     SetCaption __UI_NewID, "CONVERT"
     Control(__UI_NewID).CanHaveFocus = True
     Control(__UI_NewID).Disabled = True
 
-    __UI_NewID = __UI_NewControl(__UI_Type_TextBox, "OutputFileTB", 544, 23, 14, 38, 0)
+    __UI_NewID = __UI_NewControl(__UI_Type_TextBox, "OutputFileTB", 567, 23, 11, 38, 0)
     __UI_RegisterResult = 0
     SetCaption __UI_NewID, "Output File"
     Control(__UI_NewID).HasBorder = True
@@ -40,14 +40,14 @@ SUB __UI_LoadForm
     Control(__UI_NewID).Disabled = True
     Control(__UI_NewID).BorderSize = 1
 
-    __UI_NewID = __UI_NewControl(__UI_Type_ListBox, "ListBox1", 544, 200, 14, 114, 0)
+    __UI_NewID = __UI_NewControl(__UI_Type_ListBox, "ListBox1", 567, 200, 11, 114, 0)
     __UI_RegisterResult = 0
     Control(__UI_NewID).HasBorder = True
     Control(__UI_NewID).CanHaveFocus = True
     Control(__UI_NewID).BorderSize = 1
     Control(__UI_NewID).AutoScroll = True
 
-    __UI_NewID = __UI_NewControl(__UI_Type_Button, "ClearLogBT", 80, 23, 478, 78, 0)
+    __UI_NewID = __UI_NewControl(__UI_Type_Button, "ClearLogBT", 80, 23, 498, 78, 0)
     __UI_RegisterResult = 0
     SetCaption __UI_NewID, "Clear Log"
     Control(__UI_NewID).CanHaveFocus = True

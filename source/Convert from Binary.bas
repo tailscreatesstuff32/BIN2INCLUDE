@@ -43,7 +43,7 @@ SUB __UI_OnLoad
     END IF
     _ACCEPTFILEDROP
     AddItem ListBox1, "Open a file above or drag and drop."
-    AddItem ListBox1, "Select BIN2BAS to convert a binary file to BAS or select PIC2MEM to convert an image to a BAS file."
+    AddItem ListBox1, "Select BIN2BAS to convert a binary file to BAS or select PIC2MEM to convert an image to a MEM block."
     AddItem ListBox1, "To compile a file that is creating memory errors,"
     AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2BAS64"
     _SCREENMOVE _MIDDLE
