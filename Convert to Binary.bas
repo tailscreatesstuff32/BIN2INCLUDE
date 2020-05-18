@@ -1,3 +1,5 @@
+$SCREENHIDE
+_SCREENHIDE
 ': This program uses
 ': InForm - GUI library for QB64 - Beta version 8
 ': Fellippe Heitor, 2016-2018 - fellippe@qb64.org - @fellippeheitor
@@ -21,6 +23,8 @@ DIM SHARED SaveBT AS LONG
 DIM SHARED OutputFileTB AS LONG
 DIM SHARED ListBox1 AS LONG
 DIM SHARED ClearLogBT AS LONG
+DIM SHARED BIN2BASRB AS LONG
+DIM SHARED PIC2MEMRB AS LONG
 '$INCLUDE:'InForm\InForm.ui'
 '$INCLUDE:'InForm\xp.uitheme'
 '$INCLUDE:'Convert to Binary.frm'
@@ -45,6 +49,7 @@ SUB __UI_OnLoad
     AddItem ListBox1, "To compile a file that is creating memory errors,"
     AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2BAS64"
     _SCREENMOVE _MIDDLE
+    _SCREENSHOW
 END SUB
 
 SUB __UI_BeforeUpdateDisplay
@@ -75,11 +80,11 @@ SUB __UI_Click (id AS LONG)
         CASE OpenBT
             $IF 32BIT THEN
                 hWnd& = _WINDOWHANDLE
-                Filter$ = "All files (*.*)|*.*"
+                Filter$ = "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF|All files (*.*)|*.*"
                 Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
                 OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
             $ELSE
-                OFile$ = GetOpenFileName64("Open File", ".\", "All Files (*.*)|*.*")
+                OFile$ = GetOpenFileName64("Open File", ".\", "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF|All files (*.*)|*.*")
             $END IF
             IF OFile$ <> "" THEN
                 Control(CONVERTBT).Disabled = False
@@ -89,7 +94,11 @@ SUB __UI_Click (id AS LONG)
                 Text(SelectedFileTB) = ""
             END IF
         CASE CONVERTBT
-            a = bin2bas(Text(SelectedFileTB), Text(OutputFileTB))
+            IF Control(BIN2BASRB).Value = True THEN
+                a = bin2bas(Text(SelectedFileTB), Text(OutputFileTB))
+            ELSEIF Control(PIC2MEMRB).Value = True THEN
+                a = pic2mem(Text(SelectedFileTB), Text(OutputFileTB))
+            END IF
         CASE OutputFileTB
 
         CASE ListBox1
@@ -296,6 +305,7 @@ FUNCTION bin2bas (IN$, OUT$)
         PRINT #2, "DIM C%"
         PRINT #2, "DIM F$"
         PRINT #2, "DIM C$"
+        PRINT #2, "DIM j"
         PRINT #2, "DIM t%"
         PRINT #2, "DIM B&"
         PRINT #2, "DIM X$"
@@ -305,8 +315,10 @@ FUNCTION bin2bas (IN$, OUT$)
         PRINT #2, "IF INSTR(1,B$,"; Q$; "%"; Q$; ") THEN"
         PRINT #2, "FOR C%=1 TO LEN(B$):F$=MID$(B$,C%,1)"
         PRINT #2, "IF F$<>"; Q$; "%"; Q$; "THEN C$=C$+F$"
-        PRINT #2, "NEXT:B$=C$"
-        PRINT #2, "END IF:FOR t%=LEN(B$) TO 1 STEP-1"
+        PRINT #2, "NEXT:B$=C$:END IF:FOR j=1 TO LEN(B$)"
+        PRINT #2, "IF MID$(B$,j,1)="; Q$; "#"; Q$; " THEN"
+        PRINT #2, "MID$(B$,j)="; Q$; "@"; Q$; ":END IF:NEXT"
+        PRINT #2, "FOR t%=LEN(B$) TO 1 STEP-1"
         PRINT #2, "B&=B&*64+ASC(MID$(B$,t%))-48"
         PRINT #2, "NEXT:X$="; Q$; Q$; ":FOR t%=1 TO LEN(B$)-1"
         PRINT #2, "X$=X$+CHR$(B& AND 255):B&=B&\256"
@@ -326,24 +338,35 @@ FUNCTION bin2bas (IN$, OUT$)
     END IF
 END FUNCTION
 
+FUNCTION pic2mem (IN$, OUT$)
+    AddItem ListBox1, TIME$ + ": Opening file: " + IN$
+    AddItem ListBox1, TIME$ + ": Processing file..."
+    a = _SHELLHIDE("pic2mem.exe " + CHR$(34) + IN$ + CHR$(34) + " " + CHR$(34) + OUT$ + CHR$(34))
+    IF a = 1 THEN
+        AddItem ListBox1, TIME$ + ": Image converted to MEM successfully"
+        AddItem ListBox1, TIME$ + ": File exported to " + OUT$
+        Text(SelectedFileTB) = ""
+        Text(OutputFileTB) = ""
+        Control(CONVERTBT).Disabled = True
+    ELSE
+        AddItem ListBox1, TIME$ + ": Image could not be converted. Try again"
+    END IF
+    pic2mem = a
+END FUNCTION
+
 FUNCTION E$ (B$)
-    DIM T%
-    DIM B&
-    DIM a$
-    DIM g$
+
     FOR T% = LEN(B$) TO 1 STEP -1
         B& = B& * 256 + ASC(MID$(B$, T%))
     NEXT
+
     a$ = ""
     FOR T% = 1 TO LEN(B$) + 1
         g$ = CHR$(48 + (B& AND 63)): B& = B& \ 64
-        'If < and > are here, replace them with # and *
-        'Just so there's no HTML tag problems with forums.
-        'They'll be restored during the decoding process..
-        'IF g$ = "<" THEN g$ = "#"
-        'IF g$ = ">" THEN g$ = "*"
+        IF g$ = "@" THEN g$ = "#"
         a$ = a$ + g$
     NEXT: E$ = a$
+
 END FUNCTION
 
 FUNCTION StripDirectory$ (OFile$)

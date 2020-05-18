@@ -52,6 +52,16 @@ SUB __UI_LoadForm
     SetCaption __UI_NewID, "Clear Log"
     Control(__UI_NewID).CanHaveFocus = True
 
+    __UI_NewID = __UI_NewControl(__UI_Type_RadioButton, "BIN2BASRB", 76, 23, 189, 78, 0)
+    __UI_RegisterResult = 0
+    SetCaption __UI_NewID, "BIN2BAS"
+    Control(__UI_NewID).CanHaveFocus = True
+
+    __UI_NewID = __UI_NewControl(__UI_Type_RadioButton, "PIC2MEMRB", 82, 23, 270, 78, 0)
+    __UI_RegisterResult = 0
+    SetCaption __UI_NewID, "PIC2MEM"
+    Control(__UI_NewID).CanHaveFocus = True
+
 END SUB
 
 SUB __UI_AssignIDs
@@ -62,4 +72,6 @@ SUB __UI_AssignIDs
     OutputFileTB = __UI_GetID("OutputFileTB")
     ListBox1 = __UI_GetID("ListBox1")
     ClearLogBT = __UI_GetID("ClearLogBT")
+    BIN2BASRB = __UI_GetID("BIN2BASRB")
+    PIC2MEMRB = __UI_GetID("PIC2MEMRB")
 END SUB
