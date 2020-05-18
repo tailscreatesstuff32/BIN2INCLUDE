@@ -36,11 +36,6 @@ END SUB
 SUB __UI_OnLoad
     Control(OpenBT).Disabled = True
     SetFrameRate 60
-    IF COMMAND$ <> "" THEN
-        Text(SelectedFileTB) = COMMAND$
-        Text(OutputFileTB) = COMMAND$ + ".bin.bas"
-        Control(CONVERTBT).Disabled = False
-    END IF
     _ACCEPTFILEDROP
     AddItem ListBox1, "Open a file above or drag and drop."
     AddItem ListBox1, "Select BIN2BAS to convert a binary file to BAS or select PIC2MEM to convert an image to a MEM block."
@@ -56,9 +51,20 @@ SUB __UI_BeforeUpdateDisplay
     IF _TOTALDROPPEDFILES THEN
         drop$ = _DROPPEDFILE
         IF _FILEEXISTS(drop$) THEN
-            Text(SelectedFileTB) = drop$
-            Text(OutputFileTB) = drop$ + ".bin.bas"
-            Control(CONVERTBT).Disabled = False
+            IF checkExt(drop$) = 0 AND Control(PIC2MEMRB).Value = False THEN
+                Control(BIN2BASRB).Value = True
+                Control(PIC2MEMRB).Disabled = True
+                Text(SelectedFileTB) = drop$
+                Text(OutputFileTB) = drop$ + ".bin.bas"
+                Control(CONVERTBT).Disabled = False
+            ELSEIF checkExt(drop$) AND Control(PIC2MEMRB).Value = True THEN
+                Control(BIN2BASRB).Disabled = True
+                Text(SelectedFileTB) = drop$
+                Text(OutputFileTB) = drop$ + ".bin.bas"
+                Control(CONVERTBT).Disabled = False
+            ELSEIF checkExt(drop$) = 0 AND Control(PIC2MEMRB).Value = True THEN
+                Answer = MessageBox("Unsupported file type for PIC2MEM", "", MsgBox_OkOnly + MsgBox_Exclamation)
+            END IF
         END IF
     END IF
 END SUB
