@@ -35,6 +35,7 @@ SUB __UI_BeforeInit
 END SUB
 
 SUB __UI_OnLoad
+    Control(OpenBT).Disabled = True
     SetFrameRate 60
     IF COMMAND$ <> "" THEN
         Text(SelectedFileTB) = COMMAND$
@@ -78,14 +79,25 @@ SUB __UI_Click (id AS LONG)
         CASE SelectedFileTB
 
         CASE OpenBT
+        IF Control(BIN2BASRB).Value = True THEN
             $IF 32BIT THEN
                 hWnd& = _WINDOWHANDLE
-                Filter$ = "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF|All files (*.*)|*.*"
+                Filter$ = "All files (*.*)|*.*"
                 Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
                 OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
             $ELSE
-                OFile$ = GetOpenFileName64("Open File", ".\", "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF|All files (*.*)|*.*")
+                OFile$ = GetOpenFileName64("Open File", ".\", "All files (*.*)|*.*")
             $END IF
+            elseif Control(PIC2MEMRB).Value = True THEN
+            $IF 32BIT THEN
+                hWnd& = _WINDOWHANDLE
+                Filter$ = "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF"
+                Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
+                OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
+            $ELSE
+                OFile$ = GetOpenFileName64("Open File", ".\", "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF")
+            $END IF
+            end if
             IF OFile$ <> "" THEN
                 Control(CONVERTBT).Disabled = False
                 Text(SelectedFileTB) = OFile$
@@ -98,6 +110,8 @@ SUB __UI_Click (id AS LONG)
                 a = bin2bas(Text(SelectedFileTB), Text(OutputFileTB))
             ELSEIF Control(PIC2MEMRB).Value = True THEN
                 a = pic2mem(Text(SelectedFileTB), Text(OutputFileTB))
+            ELSE
+                Answer = MessageBox("Select an option, first", "BIN2BAS or PIC2MEM?", MsgBox_OkOnly + MsgBox_Exclamation)
             END IF
         CASE OutputFileTB
 
@@ -249,7 +263,10 @@ END SUB
 SUB __UI_ValueChanged (id AS LONG)
     SELECT CASE id
         CASE ListBox1
-
+        CASE BIN2BASRB
+            Control(OpenBT).Disabled = False
+        CASE PIC2MEMRB
+            Control(OpenBT).Disabled = False
     END SELECT
 END SUB
 
@@ -335,6 +352,9 @@ FUNCTION bin2bas (IN$, OUT$)
         Text(SelectedFileTB) = ""
         Text(OutputFileTB) = ""
         Control(CONVERTBT).Disabled = True
+        Control(OpenBT).Disabled = True
+        Control(BIN2BASRB).Value = False
+        Control(PIC2MEMRB).Value = False
     END IF
 END FUNCTION
 
@@ -348,6 +368,9 @@ FUNCTION pic2mem (IN$, OUT$)
         Text(SelectedFileTB) = ""
         Text(OutputFileTB) = ""
         Control(CONVERTBT).Disabled = True
+        Control(OpenBT).Disabled = True
+        Control(BIN2BASRB).Value = False
+        Control(PIC2MEMRB).Value = False
     ELSE
         AddItem ListBox1, TIME$ + ": Image could not be converted. Try again"
     END IF
