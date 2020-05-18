@@ -101,15 +101,13 @@ SUB __UI_Click (id AS LONG)
                 Control(BIN2BASRB).Disabled = True
             END IF
             IF OFile$ <> "" THEN
-                IF checkExt(OFile$) = 0 THEN
-                    IF Control(PIC2MEMRB).Value = True THEN
+                IF checkExt(OFile$) = 0 AND Control(PIC2MEMRB).Value = True THEN
                         Answer = MessageBox("Unsupported file type for PIC2MEM", "", MsgBox_OkOnly + MsgBox_Exclamation)
-                    END IF
+                        else
+                Control(CONVERTBT).Disabled = False
+                Text(SelectedFileTB) = OFile$
+                Text(OutputFileTB) = OFile$ + ".bin.bas"
                 END IF
-                        Control(CONVERTBT).Disabled = False
-                        Text(SelectedFileTB) = OFile$
-                        Text(OutputFileTB) = OFile$ + ".bin.bas"
-
             ELSE
                 Text(SelectedFileTB) = ""
             END IF
