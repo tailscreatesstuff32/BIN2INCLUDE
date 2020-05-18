@@ -1,8 +1,8 @@
 $SCREENHIDE
 _SCREENHIDE
 ': This program uses
-': InForm - GUI library for QB64 - Beta version 8
-': Fellippe Heitor, 2016-2018 - fellippe@qb64.org - @fellippeheitor
+': InForm - GUI library for QB64 - v1.1
+': Fellippe Heitor, 2016-2019 - fellippe@qb64.org - @fellippeheitor
 ': https://github.com/FellippeHeitor/InForm
 '-----------------------------------------------------------
 '$CONSOLE
