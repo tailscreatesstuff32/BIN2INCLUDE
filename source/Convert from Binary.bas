@@ -5,14 +5,23 @@ _SCREENHIDE
 ': Fellippe Heitor, 2016-2019 - fellippe@qb64.org - @fellippeheitor
 ': https://github.com/FellippeHeitor/InForm
 '-----------------------------------------------------------
+$VERSIONINFO:CompanyName=SpriggsySpriggs
+$VERSIONINFO:FileDescription=Convert From Binary
+$VERSIONINFO:LegalCopyright=(c) 2019-2020 SpriggsySpriggs
+$VERSIONINFO:ProductName=Convert From Binary
+$VERSIONINFO:Web=https://github.com/SpriggsySpriggs/BIN2BAS64
+$VERSIONINFO:Comments=Converts a binary file into an INCLUDE-able
+$VERSIONINFO:FILEVERSION#=2,0,0,0
+$VERSIONINFO:PRODUCTVERSION#=2,0,0,0
 '$CONSOLE
 '_CONSOLE ON
-'$INCLUDE:'binary-icon-11870-Windows.ico.bin.bas'
+'$INCLUDE:'binary.ico.bin.bas'
 '$INCLUDE:'Open-SaveFile.BI'
 DEFINT A-Z
 DECLARE FUNCTION E$ (B$)
 
-$EXEICON:'binary-icon-11870-Windows.ico'
+$EXEICON:'binary.ico'
+_ICON
 ': Controls' IDs: ------------------------------------------------------------------
 DIM SHARED ConvertToBinary AS LONG
 DIM SHARED SelectedFileTB AS LONG
@@ -35,10 +44,10 @@ SUB __UI_BeforeInit
 END SUB
 
 SUB __UI_OnLoad
-    Control(OpenBT).HelperCanvas = openfolder
-    Control(CONVERTBT).HelperCanvas = convert
+    Control(OpenBT).HelperCanvas = openfolder&
+    Control(CONVERTBT).HelperCanvas = convert&
     Control(ResetBT).HelperCanvas = reset&
-    Control(ClearLogBT).HelperCanvas = delete
+    Control(ClearLogBT).HelperCanvas = delete&
     Control(OpenBT).Disabled = True
     SetFrameRate 60
     _ACCEPTFILEDROP
