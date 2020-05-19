@@ -1,4 +1,4 @@
-FUNCTION __convert& 'C:\Users\zacharys\OneDrive - pscindustries\Desktop\QB64 Files\qb32\convert.png
+FUNCTION __convert&
 DIM v&
 DIM A$
 DIM btemp$
