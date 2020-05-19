@@ -1,4 +1,4 @@
-FUNCTION __openfolder& 'C:\Users\zacharys\OneDrive - pscindustries\Desktop\QB64 Files\qb32\open-folder.png
+FUNCTION __openfolder&
 DIM v&
 DIM A$
 DIM btemp$
