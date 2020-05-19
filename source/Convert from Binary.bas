@@ -312,6 +312,7 @@ END SUB
 SUB __UI_ValueChanged (id AS LONG)
     SELECT CASE id
         CASE ListBox1
+
         CASE BIN2BASRB
             Control(OpenBT).Disabled = False
         CASE PIC2MEMRB
@@ -398,6 +399,7 @@ FUNCTION bin2bas (IN$, OUT$)
         CLOSE #2
         AddItem ListBox1, TIME$ + ": DONE"
         AddItem ListBox1, TIME$ + ": File exported to " + OUT$
+                            ToolTip(ListBox1) =  TIME$ + ": File exported to " + OUT$
         Text(SelectedFileTB) = ""
         Text(OutputFileTB) = ""
         Control(CONVERTBT).Disabled = True
@@ -414,6 +416,7 @@ FUNCTION pic2mem (IN$, OUT$)
     IF a = 1 THEN
         AddItem ListBox1, TIME$ + ": Image converted to MEM successfully"
         AddItem ListBox1, TIME$ + ": File exported to " + OUT$
+                    ToolTip(ListBox1) =  TIME$ + ": File exported to " + OUT$
         Text(SelectedFileTB) = ""
         Text(OutputFileTB) = ""
         Control(CONVERTBT).Disabled = True
