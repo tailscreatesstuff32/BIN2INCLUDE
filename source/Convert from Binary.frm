@@ -28,7 +28,7 @@ SUB __UI_LoadForm
 
     __UI_NewID = __UI_NewControl(__UI_Type_Button, "CONVERTBT", 80, 23, 96, 78, 0)
     __UI_RegisterResult = 0
-    SetCaption __UI_NewID, "CONVERT"
+    SetCaption __UI_NewID, "Convert"
     Control(__UI_NewID).CanHaveFocus = True
     Control(__UI_NewID).Disabled = True
 
@@ -62,6 +62,11 @@ SUB __UI_LoadForm
     SetCaption __UI_NewID, "PIC2MEM"
     Control(__UI_NewID).CanHaveFocus = True
 
+    __UI_NewID = __UI_NewControl(__UI_Type_Button, "ResetBT", 80, 23, 413, 78, 0)
+    __UI_RegisterResult = 0
+    SetCaption __UI_NewID, "Reset"
+    Control(__UI_NewID).CanHaveFocus = True
+
 END SUB
 
 SUB __UI_AssignIDs
@@ -74,4 +79,5 @@ SUB __UI_AssignIDs
     ClearLogBT = __UI_GetID("ClearLogBT")
     BIN2BASRB = __UI_GetID("BIN2BASRB")
     PIC2MEMRB = __UI_GetID("PIC2MEMRB")
+    ResetBT = __UI_GetID("ResetBT")
 END SUB
