@@ -161,11 +161,7 @@ SUB __UI_Click (id AS LONG)
 END SUB
 
 SUB ResetScreen
-    ResetList ListBox1
-    AddItem ListBox1, "Open a file above or drag and drop."
-    AddItem ListBox1, "Select BIN2BAS to convert a binary file to BAS or select PIC2MEM to convert an image to a MEM block."
-    AddItem ListBox1, "To compile a file that is creating memory errors,"
-    AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2BAS64"
+    'ResetList ListBox1
     Text(SelectedFileTB) = ""
     Text(OutputFileTB) = ""
     Control(BIN2BASRB).Disabled = False
@@ -350,7 +346,7 @@ FUNCTION bin2bas (IN$, OUT$)
                 END IF
             END IF
         NEXT
-        PRINT #2, "SUB __" + StripDirectory(inFunc$) + " '"; IN$
+        PRINT #2, "SUB __" + StripDirectory(inFunc$)
         PRINT #2, "IF _FILEEXISTS(" + Q$ + StripDirectory$(IN$) + Q$ + ") = 0 THEN 'remove this line if you are compiling in FreeBasic"
         AddItem ListBox1, TIME$ + ": Opening file: " + IN$
         AddItem ListBox1, TIME$ + ": Processing file..."

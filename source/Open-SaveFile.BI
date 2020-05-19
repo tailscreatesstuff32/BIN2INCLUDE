@@ -45,6 +45,8 @@ $IF 32BIT THEN
         FUNCTION GetSaveFileNameA& (DIALOGPARAMS AS FILEDIALOGTYPE) ' The Save file dialog
     END DECLARE
     '--------------------------------------------------------------------------------------------
-    $END IF
+$ELSE
+    __OpenFile
+$END IF
 DIM SHARED OFile AS STRING
 DIM SHARED SFile AS STRING

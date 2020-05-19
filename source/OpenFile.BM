@@ -44,6 +44,7 @@ $IF 32BIT THEN
 
     END FUNCTION
 $ELSE
+    '$INCLUDE:'OpenFile.ps1.BM'
     FUNCTION GetOpenFileName64$ (Title$, InitialDir$, Filter$)
     SHELL$ = "PowerShell -ExecutionPolicy Bypass " + CHR$(34) + "&'" + _STARTDIR$ + "\OpenFile.ps1'"
     SHELL$ = SHELL$ + " " + "\" + CHR$(34) + Title$ + "\" + CHR$(34)

@@ -37,7 +37,7 @@ IF COMMAND$ <> "" THEN
             END IF
         END IF
     NEXT
-    PRINT #2, "FUNCTION __" + StripDirectory(inFunc$) + "& '"; IN$
+    PRINT #2, "FUNCTION __" + StripDirectory(inFunc$) + "&"
     PRINT #2, "DIM v&"
     PRINT #2, "DIM A$"
     PRINT #2, "DIM btemp$"
