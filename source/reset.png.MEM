@@ -1,4 +1,16 @@
-FUNCTION reset& 'C:\Users\zacharys\OneDrive - pscindustries\Desktop\QB64 Files\qb32\reset.png
+FUNCTION __reset& 'C:\Users\zacharys\OneDrive - pscindustries\Desktop\QB64 Files\qb32\reset.png
+DIM v&
+DIM A$
+DIM btemp$
+DIM i&
+DIM B$
+DIM C%
+DIM F$
+DIM C$
+DIM j
+DIM t%
+DIM B&
+DIM X$
 v&=_NEWIMAGE( 200 , 200 ,32)
 DIM m AS _MEM:m=_MEMIMAGE(v&)
 A$ = ""
@@ -82,5 +94,5 @@ X$=X$+CHR$(B& AND 255):B&=B&\256
 NEXT:btemp$=btemp$+X$:NEXT
 btemp$=_INFLATE$(btemp$)
 _MEMPUT m, m.OFFSET, btemp$: _MEMFREE m
-reset& = _COPYIMAGE(v&): _FREEIMAGE v&
+__reset& = _COPYIMAGE(v&): _FREEIMAGE v&
 END FUNCTION

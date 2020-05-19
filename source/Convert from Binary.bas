@@ -11,11 +11,12 @@ $VERSIONINFO:LegalCopyright=(c) 2019-2020 SpriggsySpriggs
 $VERSIONINFO:ProductName=Convert From Binary
 $VERSIONINFO:Web=https://github.com/SpriggsySpriggs/BIN2BAS64
 $VERSIONINFO:Comments=Converts a binary file into an INCLUDE-able
-$VERSIONINFO:FILEVERSION#=2,0,0,0
-$VERSIONINFO:PRODUCTVERSION#=2,0,0,0
+$VERSIONINFO:FILEVERSION#=2,1,0,0
+$VERSIONINFO:PRODUCTVERSION#=2,1,0,0
 '$CONSOLE
 '_CONSOLE ON
-'$INCLUDE:'binary.ico.bin.bas'
+__binary
+__NewWPFMessageBox
 '$INCLUDE:'Open-SaveFile.BI'
 DEFINT A-Z
 DECLARE FUNCTION E$ (B$)
@@ -23,7 +24,7 @@ DECLARE FUNCTION E$ (B$)
 $EXEICON:'binary.ico'
 _ICON
 ': Controls' IDs: ------------------------------------------------------------------
-DIM SHARED ConvertToBinary AS LONG
+DIM SHARED ConvertFromBinary AS LONG
 DIM SHARED SelectedFileTB AS LONG
 DIM SHARED OpenBT AS LONG
 DIM SHARED CONVERTBT AS LONG
@@ -44,10 +45,10 @@ SUB __UI_BeforeInit
 END SUB
 
 SUB __UI_OnLoad
-    Control(OpenBT).HelperCanvas = openfolder&
-    Control(CONVERTBT).HelperCanvas = convert&
-    Control(ResetBT).HelperCanvas = reset&
-    Control(ClearLogBT).HelperCanvas = delete&
+    Control(OpenBT).HelperCanvas = __openfolder&
+    Control(CONVERTBT).HelperCanvas = __convert&
+    Control(ResetBT).HelperCanvas = __reset&
+    Control(ClearLogBT).HelperCanvas = __delete&
     Control(OpenBT).Disabled = True
     SetFrameRate 60
     _ACCEPTFILEDROP
@@ -69,7 +70,7 @@ SUB __UI_BeforeUpdateDisplay
                 Control(BIN2BASRB).Value = True
                 Control(PIC2MEMRB).Disabled = True
                 Text(SelectedFileTB) = drop$
-                Text(OutputFileTB) = drop$ + ".bin.bas"
+                Text(OutputFileTB) = drop$ + ".BM"
                 Control(CONVERTBT).Disabled = False
             ELSEIF checkExt(drop$) AND Control(PIC2MEMRB).Value = True THEN
                 Control(BIN2BASRB).Disabled = True
@@ -91,7 +92,7 @@ END SUB
 
 SUB __UI_Click (id AS LONG)
     SELECT CASE id
-        CASE ConvertToBinary
+        CASE ConvertFromBinary
 
         CASE SelectedFileTB
 
@@ -127,7 +128,7 @@ SUB __UI_Click (id AS LONG)
                 ELSE
                     Control(CONVERTBT).Disabled = False
                     Text(SelectedFileTB) = OFile$
-                    Text(OutputFileTB) = OFile$ + ".bin.bas"
+                    Text(OutputFileTB) = OFile$ + ".BM"
                 END IF
             ELSE
                 Text(SelectedFileTB) = ""
@@ -173,7 +174,7 @@ END SUB
 
 SUB __UI_MouseEnter (id AS LONG)
     SELECT CASE id
-        CASE ConvertToBinary
+        CASE ConvertFromBinary
 
         CASE SelectedFileTB
 
@@ -192,7 +193,7 @@ END SUB
 
 SUB __UI_MouseLeave (id AS LONG)
     SELECT CASE id
-        CASE ConvertToBinary
+        CASE ConvertFromBinary
 
         CASE SelectedFileTB
 
@@ -247,7 +248,7 @@ END SUB
 
 SUB __UI_MouseDown (id AS LONG)
     SELECT CASE id
-        CASE ConvertToBinary
+        CASE ConvertFromBinary
 
         CASE SelectedFileTB
 
@@ -266,7 +267,7 @@ END SUB
 
 SUB __UI_MouseUp (id AS LONG)
     SELECT CASE id
-        CASE ConvertToBinary
+        CASE ConvertFromBinary
 
         CASE SelectedFileTB
 
@@ -334,6 +335,20 @@ FUNCTION bin2bas (IN$, OUT$)
         INDATA$ = _DEFLATE$(INDATA$)
         OPEN OUT$ FOR OUTPUT AS 2
         Q$ = CHR$(34) 'quotation mark
+        inFunc$ = LEFT$(IN$, LEN(IN$) - 4)
+        FOR i = 32 TO 64
+            IF INSTR(inFunc$, CHR$(i)) THEN
+                inFunc$ = ReplaceStringItem(inFunc$, CHR$(i), "")
+            END IF
+        NEXT
+        FOR i = 91 TO 96
+            IF INSTR(inFunc$, CHR$(i)) THEN
+                IF i <> 92 THEN
+                    inFunc$ = ReplaceStringItem(inFunc$, CHR$(i), "")
+                END IF
+            END IF
+        NEXT
+        PRINT #2, "SUB __" + StripDirectory(inFunc$) + " '"; IN$
         PRINT #2, "IF _FILEEXISTS(" + Q$ + StripDirectory$(IN$) + Q$ + ") = 0 THEN 'remove this line if you are compiling in FreeBasic"
         AddItem ListBox1, TIME$ + ": Opening file: " + IN$
         AddItem ListBox1, TIME$ + ": Processing file..."
@@ -395,11 +410,12 @@ FUNCTION bin2bas (IN$, OUT$)
         PRINT #2, "PRINT #1, BASFILE$;"
         PRINT #2, "CLOSE #1"
         PRINT #2, "END IF 'remove this line if you are compiling in FreeBasic"
+        PRINT #2, "END SUB"
         CLOSE #1
         CLOSE #2
         AddItem ListBox1, TIME$ + ": DONE"
         AddItem ListBox1, TIME$ + ": File exported to " + OUT$
-                            ToolTip(ListBox1) =  TIME$ + ": File exported to " + OUT$
+        ToolTip(ListBox1) = TIME$ + ": File exported to " + OUT$
         Text(SelectedFileTB) = ""
         Text(OutputFileTB) = ""
         Control(CONVERTBT).Disabled = True
@@ -416,7 +432,7 @@ FUNCTION pic2mem (IN$, OUT$)
     IF a = 1 THEN
         AddItem ListBox1, TIME$ + ": Image converted to MEM successfully"
         AddItem ListBox1, TIME$ + ": File exported to " + OUT$
-                    ToolTip(ListBox1) =  TIME$ + ": File exported to " + OUT$
+        ToolTip(ListBox1) = TIME$ + ": File exported to " + OUT$
         Text(SelectedFileTB) = ""
         Text(OutputFileTB) = ""
         Control(CONVERTBT).Disabled = True
@@ -462,10 +478,10 @@ FUNCTION StripDirectory$ (OFile$)
     StripDirectory$ = OFile$
 END FUNCTION
 '$INCLUDE:'OpenFile.BM'
-$IF 64BIT THEN
-    '$INCLUDE:'Replace.BM'
-$END IF
+'$INCLUDE:'Replace.BM'
 '$INCLUDE:'open-folder.png.MEM'
 '$INCLUDE:'convert.png.MEM'
 '$INCLUDE:'reset.png.MEM'
 '$INCLUDE:'delete.png.MEM'
+'$INCLUDE:'binary.ico.BM'
+'$INCLUDE:'New-WPFMessageBox.ps1.BM'

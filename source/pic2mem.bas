@@ -40,7 +40,19 @@ IF COMMAND$ <> "" THEN
             END IF
         END IF
     NEXT
-    PRINT #2, "FUNCTION " + StripDirectory(inFunc$) + "& '"; IN$
+    PRINT #2, "FUNCTION __" + StripDirectory(inFunc$) + "& '"; IN$
+    PRINT #2, "DIM v&"
+    PRINT #2, "DIM A$"
+    PRINT #2, "DIM btemp$"
+    PRINT #2, "DIM i&"
+    PRINT #2, "DIM B$"
+    PRINT #2, "DIM C%"
+    PRINT #2, "DIM F$"
+    PRINT #2, "DIM C$"
+    PRINT #2, "DIM j"
+    PRINT #2, "DIM t%"
+    PRINT #2, "DIM B&"
+    PRINT #2, "DIM X$"
     PRINT #2, "v&=_NEWIMAGE("; wid; ","; hih; ",32)"
     PRINT #2, "DIM m AS _MEM:m=_MEMIMAGE(v&)"
     PRINT #2, "A$ = "; Q$; Q$
@@ -84,7 +96,7 @@ IF COMMAND$ <> "" THEN
     PRINT #2, "NEXT:btemp$=btemp$+X$:NEXT"
     PRINT #2, "btemp$=_INFLATE$(btemp$)"
     PRINT #2, "_MEMPUT m, m.OFFSET, btemp$: _MEMFREE m"
-    PRINT #2, inFunc$ + "& = _COPYIMAGE(v&): _FREEIMAGE v&"
+    PRINT #2, "__" + inFunc$ + "& = _COPYIMAGE(v&): _FREEIMAGE v&"
     PRINT #2, "END FUNCTION"
     SYSTEM 1
 ELSE
