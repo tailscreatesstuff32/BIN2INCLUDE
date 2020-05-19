@@ -52,7 +52,7 @@ SUB __UI_OnLoad
     SetFrameRate 60
     _ACCEPTFILEDROP
     AddItem ListBox1, "Open a file above or drag and drop."
-    AddItem ListBox1, "Select BIN2BAS to convert a binary file to BAS or select PIC2MEM to convert an image to a MEM block."
+    AddItem ListBox1, "Select BIN2BAS to convert a binary file to BM or select PIC2MEM to convert an image to MEM."
     AddItem ListBox1, "To compile a file that is creating memory errors,"
     AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2BAS64"
     _SCREENMOVE _MIDDLE
@@ -171,6 +171,7 @@ SUB ResetScreen
     Control(BIN2BASRB).Disabled = False
     Control(PIC2MEMRB).Disabled = False
     Control(CONVERTBT).Disabled = True
+    ToolTip(ListBox1) = ""
 END SUB
 
 SUB __UI_MouseEnter (id AS LONG)
