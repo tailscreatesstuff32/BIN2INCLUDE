@@ -34,6 +34,8 @@ SUB __UI_BeforeInit
 END SUB
 
 SUB __UI_OnLoad
+    Control(OpenBT).HelperCanvas = openfolder
+    Control(CONVERTBT).HelperCanvas = convert
     Control(OpenBT).Disabled = True
     SetFrameRate 60
     _ACCEPTFILEDROP
@@ -60,7 +62,7 @@ SUB __UI_BeforeUpdateDisplay
             ELSEIF checkExt(drop$) AND Control(PIC2MEMRB).Value = True THEN
                 Control(BIN2BASRB).Disabled = True
                 Text(SelectedFileTB) = drop$
-                Text(OutputFileTB) = drop$ + ".bin.bas"
+                Text(OutputFileTB) = drop$ + ".MEM"
                 Control(CONVERTBT).Disabled = False
             ELSEIF checkExt(drop$) = 0 AND Control(PIC2MEMRB).Value = True THEN
                 Answer = MessageBox("Unsupported file type for PIC2MEM", "", MsgBox_OkOnly + MsgBox_Exclamation)
@@ -97,15 +99,19 @@ SUB __UI_Click (id AS LONG)
                     hWnd& = _WINDOWHANDLE
                     Filter$ = "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF"
                     Flags& = OFN_FILEMUSTEXIST + OFN_NOCHANGEDIR + OFN_READONLY '    add flag constants here
-                    OFile$ = GetOpenFileName("Open File" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
+                    OFile$ = GetOpenFileName("Open Image" + CHR$(0), ".\", Filter$ + CHR$(0), 1, Flags&, hWnd&)
                 $ELSE
-                    OFile$ = GetOpenFileName64("Open File", ".\", "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF")
+                    OFile$ = GetOpenFileName64("Open Image", ".\", "Image Files (*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF)|*.BMP;*.JPG;*.PNG;*.JPEG;*.GIF")
                 $END IF
                 Control(BIN2BASRB).Disabled = True
             END IF
             IF OFile$ <> "" THEN
                 IF checkExt(OFile$) = 0 AND Control(PIC2MEMRB).Value = True THEN
                     Answer = MessageBox("Unsupported file type for PIC2MEM", "", MsgBox_OkOnly + MsgBox_Exclamation)
+                ELSEIF checkExt(OFile$) AND Control(PIC2MEMRB).Value = True THEN
+                    Control(CONVERTBT).Disabled = False
+                    Text(SelectedFileTB) = OFile$
+                    Text(OutputFileTB) = OFile$ + ".MEM"
                 ELSE
                     Control(CONVERTBT).Disabled = False
                     Text(SelectedFileTB) = OFile$
@@ -426,3 +432,5 @@ END FUNCTION
 $IF 64BIT THEN
     '$INCLUDE:'Replace.BM'
 $END IF
+'$INCLUDE:'open-folder.png.MEM'
+'$INCLUDE:'convert.png.MEM'
