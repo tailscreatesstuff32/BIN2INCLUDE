@@ -78,6 +78,7 @@ SUB __UI_BeforeUpdateDisplay
                 Control(CONVERTBT).Disabled = False
             ELSEIF checkExt(drop$) = 0 AND Control(PIC2MEMRB).Value = True THEN
                 Answer = MessageBox("Unsupported file type for PIC2MEM", "", MsgBox_OkOnly + MsgBox_Exclamation)
+                Control(BIN2BASRB).Disabled = False
             END IF
         END IF
     END IF
@@ -120,6 +121,7 @@ SUB __UI_Click (id AS LONG)
             IF OFile$ <> "" THEN
                 IF checkExt(OFile$) = 0 AND Control(PIC2MEMRB).Value = True THEN
                     Answer = MessageBox("Unsupported file type for PIC2MEM", "", MsgBox_OkOnly + MsgBox_Exclamation)
+                    Control(BIN2BASRB).Disabled = False
                 ELSEIF checkExt(OFile$) AND Control(PIC2MEMRB).Value = True THEN
                     Control(CONVERTBT).Disabled = False
                     Text(SelectedFileTB) = OFile$
