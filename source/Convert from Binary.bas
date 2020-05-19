@@ -16,7 +16,6 @@ $VERSIONINFO:PRODUCTVERSION#=2,1,0,0
 '$CONSOLE
 '_CONSOLE ON
 __binary
-__NewWPFMessageBox
 '$INCLUDE:'Open-SaveFile.BI'
 DEFINT A-Z
 DECLARE FUNCTION E$ (B$)
@@ -484,4 +483,3 @@ END FUNCTION
 '$INCLUDE:'reset.png.MEM'
 '$INCLUDE:'delete.png.MEM'
 '$INCLUDE:'binary.ico.BM'
-'$INCLUDE:'New-WPFMessageBox.ps1.BM'
