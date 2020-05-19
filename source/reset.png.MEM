@@ -1,0 +1,86 @@
+FUNCTION reset& 'C:\Users\zacharys\OneDrive - pscindustries\Desktop\QB64 Files\qb32\reset.png
+v&=_NEWIMAGE( 200 , 200 ,32)
+DIM m AS _MEM:m=_MEMIMAGE(v&)
+A$ = ""
+A$ = A$ + "haIkM_0[MDE567O9?[l#ZXdFZ4J9#AS0BPXa7#CZ8PRE:EQP015YJ54;?\P8"
+A$ = A$ + "VXB<J[RdJ1Y:=0U7F<=#35#`WX]B=bS6<e#A15Z8XTR8FD\XlFG;fm:UfkYg"
+A$ = A$ + "ci<kmJ?kIno;i;Q4B^MFkIFgki<cNfKA0000000000000000000000000000"
+A$ = A$ + "000000000#;eV[ieXIDJ6SVMGcN\^okA^^oOKEf>j0BW=Cchd<I=OF=cCc=["
+A$ = A$ + "i^dl`JF[VoKGVG#cCXigYiWYI1J>?=WZV3AcXMZV#l]KBhLhT7RL4J>H9lk="
+A$ = A$ + ";A_N9D7fe];AcC:Moeoa8[Ac_Dc5[iS[I?CKiR:JRJn=B_ONn5elCe\_nO8g"
+A$ = A$ + "CNeJNOJVSVE:QSK?k7jV\J=G[VYYI_Bc`0j3O9YjWKOJ=O#_?`72S#cW#c=Y"
+A$ = A$ + "iO;iojoN=?PVIYi0T`Wo3nk3;aklioAcKfg3o=b>ZiCYiFU`g38gGS7[lXJ^"
+A$ = A$ + "4=S?N3EH8Hg?6kkN6ccSG_[E`;kPdL=JNV^hH\dSmmnW^VGGD6i#WHo^XHO^"
+A$ = A$ + "kid\M>Ml?<=CEc_=1eA94kcd^#=7HE78aPjC:YilfnWhSK[ok\U`Wi8gGSFG"
+A$ = A$ + "bbdLXEI#5KTcDBciZ38A7_KS4j;Nl4MLg4bbU`mNoEeWSahUMFBJ>75koN_M"
+A$ = A$ + "_K\WA`STXSgVHFQVgMo<HSo_BXo`nI]R4MLf6beYI\mjP>N9ein3kNcLU9jh"
+A$ = A$ + "[]5kn^oEe\]mb90DKk?>F=o]4M\eVcOF2cQ0dMZKm7kT4Nn9injXVN\il5o]"
+A$ = A$ + "TQFMZoh`4^O]NVkGck\[>cdNE7j?fB=c>A77T=MNN=cD2cS2\abMoaK#c]WX"
+A$ = A$ + "S1BgWKA2cK=l:Ucn3kI8bWWZn4K^2cLZoE:Gm7O<YM<?2;]l_T`k<62bAoa<"
+A$ = A$ + "BdoVTh4km6k;dacN];NfO\52?__B:cN#>7ffhEoQ=?d_i4m_59MaN>9]iiiX"
+A$ = A$ + "7m7fLAO99jO7BjcE9]gkoKZk?\WAkbBdo64obRT`cYZ]9Em7fc2oXe\d4mcW"
+A$ = A$ + "hO^JYmmI]BEoaMWXO^N7kNil#Jn5BH=NcF;A>7=W\VSGcA:Qk7Zmk2\g?Uc#"
+A$ = A$ + "cGDcg#cU:Qe8RVdchi[;];YZoXDcmZibdLBJNkBhmE<66njniM2BH=8i1Z1e"
+A$ = A$ + "JoVC9BS9UPfNoQ]n6L3BhiE^cEKX\W=6=WX4nL;[Y7?^cI\e<Yfbc#\]fOLK"
+A$ = A$ + "BH=bjeFmQ`XH[eLDBHM\cFoGbmhc#5K]fkMTTARjUfDoQ=OF^L=kCD6iB7K="
+A$ = A$ + "OldU`l??gSIKZH[50kDR63Z;J3m7?UV_YhoWOZZ\Wi`aYiNTl?6fYlSUVmmd"
+A$ = A$ + "Z9gOH_cefLTH4AKd:?\[on#JneBn7C7\L>Y[dc^VJoQmMNgU8>>E7Hm9CAZO"
+A$ = A$ + "_GnfgG:E[gIiFC[oh?XI2aL0Z6bN?V\kALMJoI`Fg7JR[5`=Un3kJU;D2ka7"
+A$ = A$ + "]5fcCaf7CbmHo0IAY]LcRV#oaS9]ge\6kg7H?WnLO>HPl1BKij^B_oh>TVgg"
+A$ = A$ + "cXOHgW;kMo;gW?nCBlVc1e1ULoaE8QW[62\m_`j`lNklCMQjXB\o`n^6WM:6"
+A$ = A$ + "<J0\mGjLo^fHg?[gBZ;DWDJm7?[4FkAAWIkojfNlI>??I[IC=Qm;aBZo`Vc?"
+A$ = A$ + "]e_7N_b^fL^BN?OmACNEVNUBoaJUVoce85nJBn>W]:9\VLDb:Qn3k_K<Q4Eo"
+A$ = A$ + "]1ilno>E7Z_DZ^gOHOOSgObZnf1KN>^H9?Wo\m6iBnN<Fgk?\gE]];BIHAJ<"
+A$ = A$ + "[4IGS^D9?W3?E7Z_DY^gO4kH_;hcGcK<63N56kNoVSgYTE;UklnY]eO<#\gE"
+A$ = A$ + "ZY4Qa_Bcn9QgYH_7_o<NDL9#K]o`RmL6WDe72;>fkE\gSefjAA9nNDeVk?\l"
+A$ = A$ + "GTbnk?f_FXhoHmQiBU5G]mn3;]UeRSegf;QiBXWScgT75FTAoAhIXe6IOfB?"
+A$ = A$ + "7W]e5XajAQ5AdO4FSbK[^AagajBKmGTn3AVGU75;GkZ4Vk>N=FK_;KUdggSn"
+A$ = A$ + "SfMoQaNG1lLlnhlY\R2j?Xo`nmifJmVGSgo8O:[XPn3j?<fj>_GSgfLZKhnD"
+A$ = A$ + "FE6m7dOH\ioaOElK<oHlY\Z<j?XoH0Nnm#FPCeDEAo1m73`VScN]?;HcCdBH"
+A$ = A$ + "nV#o1m7[__ShghNMOMdghig;[^V;ZbSR=7fJbXGSkW^CeDEHcmXLOmI^cd[l"
+A$ = A$ + "XHcbm9n<^_H_:X:H7T`kgM^_6=GaVSk]agEZ=U?_hcHoSiE1EAcDboeYi:;<"
+A$ = A$ + "2SO==fjeZGSoScYJZ:\eC\L_VkUSHk;CeUmO`j6_FGho8NE#ET=73^09l\=c"
+A$ = A$ + "me]Y>fWYjk9Ucc`=7\[5lhLagb[2:B6]4fk_]mU\if`bLdLJJfSX=JeLMhR?"
+A$ = A$ + "m7o:_:8P8bF[CNN9mm7fNb#9lL21f#fJ<]7o=TMc[228RnfR?m7Cd[228R\e"
+A$ = A$ + "m#?j?>3_:8P8j#4Oj?^0_:8P8bNgdmXoX9^_gRV?kn:iaJg`BmZP0R<K>6Tj"
+A$ = A$ + "nSkd]Z18^^=9mm7gUKE3#LmC4j?0j4kk>Co1`Pkb5j?0jT;DXo0XClH?DWn3"
+A$ = A$ + "DZ\gC6j?06Lo#Qn3P>Ii2m70Mb3:dO0d9N\f?]<gZ6PhaFKdBM_QU_[G54#4"
+A$ = A$ + "]gR?m7OI_:8P8jX5Oj?>1_:8P8j[8ndOLPNE#0AT]?1jAoa8mZP0R4kM7l_;"
+A$ = A$ + "Y_ghOhE114AkUhcOkPgM#DRVVhCoaEhE114AgXhCo1k=AXdHkec?UhCoakaY"
+A$ = A$ + "J28FVThC_Q5foE#YaSgi3;[b[228B\m0MK?7`SnS[fYJ28FVRhgW]jTLZV0R"
+A$ = A$ + "5_fc?\`n6<:9k_hG_a3kD=14;Nmmb]<?WZ9PH`fSclHo6LPLhnDF0Aal5oj="
+A$ = A$ + "\k?f`lY\0Z<Ko^ni4oj?^FO:;PXhj4oj=\LTnDF0Efh5Ok=nW2Of:D6f2=g]"
+A$ = A$ + "hKoaUjBU1DMWYhK_QUgU;E6#e<>aWen]e?[dU:3XJfLaWmE`=<WR757#5M^R"
+A$ = A$ + "om6?QV]eSR3X2VPhkc9OPLn>DK0Ea>[IeRom6?SVAk#m1d_fJ=gQhO_QU;aQ"
+A$ = A$ + "j3XOI[eK;#bC_acZI<Y_41jKcBbC_QU;fQj3XO=39Om6[E2OW7Pj6kcD=K9O"
+A$ = A$ + "m6F>gTGU0m^]DcE9i]ghQT`j<7#Mb>ZI9BNk=\LDY^#1jAk[VoXToNSO#Z;D"
+A$ = A$ + "PNdD5oW_Q3F\gMfM=ae:#gbnlDGSTonR1bW>]U;#GKRJN49om43TKA2gg<PL"
+A$ = A$ + "JDJFXTonQe??^VM9U5=`#H[dLFJNB9om3KHVD2[KP=5kc\L\BmhNC=HIfY[d"
+A$ = A$ + "1j8kmlkHdL?Bnk1jDFV4FW70lb>XidTjkO_HPH[adS:AS10[?k_EHk5OGYhg"
+A$ = A$ + "NoGERM<^OYHP0HM\mN?K]4dFCXND9oGcg]i5d<i4<NPf]Q[iheLIJ^G=_XTo"
+A$ = A$ + "[ekW`c04adN:QiCkC;ioJkZVI4ia6dNIccLkj9?GKdCIVCL7N#;VM?X^E9oG"
+A$ = A$ + "C7[`k9;RU]AcM:ioJjHU;BHNEQhacma_DWI5ia6d^M4Bn_V>Fic5ia6d^]IB"
+A$ = A$ + "hnfVk[[[J\e\ZC<bS=07ZTo[][J\eAj3:f3<0BhiPWk[_[B^?=_YX?Z04lkU"
+A$ = A$ + "lO=NoV5[IkSo#2`;aNFPflB:gGWg[an^6CGhngRdJTBn_F_Gcm[i]VR13P=#"
+A$ = A$ + "9eOHc;bi:QWS9P7\mGSBhcGIo=3^oD87FUTo[okD\i>\=G97FbZNP=]L_V#g"
+A$ = A$ + "YL3Jfm4Fg0MSjfL;ife<nTFa0M?KMl`FGocMOabU`J[8#MS=_UbEOa?Gck=m"
+A$ = A$ + "U8#OcN>KfeYNeCH[IkcGH]41USA8YO][J5JVV4F3D0:=SE2?[QHfClPJ>?=k"
+A$ = A$ + "SOU1#bHo^m59E[WHUJVYVgVc7k0NiPe\DYkF_[FS4V;]W\4nK#0]5SA2k3Jf"
+A$ = A$ + "LOjk;Q_7oe;Qe=7knN]g2cSF000000000000000000000000d`lo0TB6%%h1"
+btemp$=""
+FOR i&=1TO LEN(A$) STEP 4:B$=MID$(A$,i&,4)
+IF INSTR(1,B$,"%") THEN
+FOR C%=1 TO LEN(B$):F$=MID$(B$,C%,1)
+IF F$<>"%"THEN C$=C$+F$
+NEXT:B$=C$:END IF:FOR j=1 TO LEN(B$)
+IF MID$(B$,j,1)="#" THEN
+MID$(B$,j)="@":END IF:NEXT
+FOR t%=LEN(B$) TO 1 STEP-1
+B&=B&*64+ASC(MID$(B$,t%))-48
+NEXT:X$="":FOR t%=1 TO LEN(B$)-1
+X$=X$+CHR$(B& AND 255):B&=B&\256
+NEXT:btemp$=btemp$+X$:NEXT
+btemp$=_INFLATE$(btemp$)
+_MEMPUT m, m.OFFSET, btemp$: _MEMFREE m
+reset& = _COPYIMAGE(v&): _FREEIMAGE v&
+END FUNCTION

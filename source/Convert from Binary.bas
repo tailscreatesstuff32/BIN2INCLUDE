@@ -24,6 +24,7 @@ DIM SHARED ListBox1 AS LONG
 DIM SHARED ClearLogBT AS LONG
 DIM SHARED BIN2BASRB AS LONG
 DIM SHARED PIC2MEMRB AS LONG
+DIM SHARED ResetBT AS LONG
 '$INCLUDE:'InForm\InForm.ui'
 '$INCLUDE:'InForm\xp.uitheme'
 '$INCLUDE:'Convert from Binary.frm'
@@ -36,6 +37,8 @@ END SUB
 SUB __UI_OnLoad
     Control(OpenBT).HelperCanvas = openfolder
     Control(CONVERTBT).HelperCanvas = convert
+    Control(ResetBT).HelperCanvas = reset&
+    Control(ClearLogBT).HelperCanvas = delete
     Control(OpenBT).Disabled = True
     SetFrameRate 60
     _ACCEPTFILEDROP
@@ -119,8 +122,10 @@ SUB __UI_Click (id AS LONG)
                 END IF
             ELSE
                 Text(SelectedFileTB) = ""
+                Text(OutputFileTB) = ""
                 Control(BIN2BASRB).Disabled = False
                 Control(PIC2MEMRB).Disabled = False
+                Control(CONVERTBT).Disabled = True
             END IF
         CASE CONVERTBT
             IF Control(BIN2BASRB).Value = True THEN
@@ -138,7 +143,23 @@ SUB __UI_Click (id AS LONG)
 
         CASE ClearLogBT
             ResetList ListBox1
+
+        CASE ResetBT
+            ResetScreen
     END SELECT
+END SUB
+
+SUB ResetScreen
+    ResetList ListBox1
+    AddItem ListBox1, "Open a file above or drag and drop."
+    AddItem ListBox1, "Select BIN2BAS to convert a binary file to BAS or select PIC2MEM to convert an image to a MEM block."
+    AddItem ListBox1, "To compile a file that is creating memory errors,"
+    AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2BAS64"
+    Text(SelectedFileTB) = ""
+    Text(OutputFileTB) = ""
+    Control(BIN2BASRB).Disabled = False
+    Control(PIC2MEMRB).Disabled = False
+    Control(CONVERTBT).Disabled = True
 END SUB
 
 SUB __UI_MouseEnter (id AS LONG)
@@ -434,3 +455,5 @@ $IF 64BIT THEN
 $END IF
 '$INCLUDE:'open-folder.png.MEM'
 '$INCLUDE:'convert.png.MEM'
+'$INCLUDE:'reset.png.MEM'
+'$INCLUDE:'delete.png.MEM'
