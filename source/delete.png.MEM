@@ -1,4 +1,4 @@
-FUNCTION __delete& 'C:\Users\zacharys\OneDrive - pscindustries\Desktop\QB64 Files\qb32\delete.png
+FUNCTION __delete&
 DIM v&
 DIM A$
 DIM btemp$
