@@ -113,6 +113,8 @@ SUB __UI_Click (id AS LONG)
                 END IF
             ELSE
                 Text(SelectedFileTB) = ""
+                Control(BIN2BASRB).Disabled = False
+                Control(PIC2MEMRB).Disabled = False
             END IF
         CASE CONVERTBT
             IF Control(BIN2BASRB).Value = True THEN
