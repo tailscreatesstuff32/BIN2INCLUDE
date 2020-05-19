@@ -24,9 +24,6 @@ IF COMMAND$ <> "" THEN
     OPEN OUT$ FOR OUTPUT AS 2
 
     Q$ = CHR$(34) 'quotation mark
-    SCREEN _NEWIMAGE(600, 600, 32)
-    pic& = BASIMAGE1&
-    _PUTIMAGE (0, 0), pic&
     inFunc$ = LEFT$(IN$, LEN(IN$) - 4)
     FOR i = 32 TO 64
         IF INSTR(inFunc$, CHR$(i)) THEN
