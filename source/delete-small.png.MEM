@@ -1,4 +1,4 @@
-FUNCTION __reset&
+FUNCTION __deletesmall&
 DIM v&
 DIM A$
 DIM btemp$
@@ -14,13 +14,10 @@ DIM X$
 v&=_NEWIMAGE( 16 , 16 ,32)
 DIM m AS _MEM:m=_MEMIMAGE(v&)
 A$ = ""
-A$ = A$ + "haiHP1J3`03<#1S<bXP<a4C:cHS=>;Pd6B<jc#3=D:PZO10a_08N30aM3D_["
-A$ = A$ + "58mS0Rg;#\LhB_VK^ib0Dnk3dNKAK]eV7dTVAPVCQP<GPbK;jj=d#3UIPbM9"
-A$ = A$ + "PbE0bRS^J1jnL6Xj^WeFK=_PhkP3>`2#ni3DM12TNoXK^05ki0MGRSVI>IPR"
-A$ = A$ + "g3<g5#fG6Tj0jnf3#jSPVnOQYVJZ4Xi6<1Xh?59eh6#lo1R_6#\bX[O#f5#k"
-A$ = A$ + "\NPH=19V:ZX2k05kGjYWNL3CM0]kT0:6oXkn19>#L3Pd?#ie0GjWD0Xkn9E0"
-A$ = A$ + "JQOTZM3>n3;Y?84P9Pj[8LUn1G0PZ=EPjIM4CjG\10Znh1Rc4HJ038Ag;A10"
-A$ = A$ + "0lQl%%h1"
+A$ = A$ + "haiHP1D16JXQm04o7S=fhoS<6ZHMa010PDWEFI5_X;>8a0:g_aVN<b8Sj3Kf"
+A$ = A$ + "9^`PD;#md9Q\CL1PjFn5BjoG0=g68Al?ABon2e]A\jmo0MonP\K2TH#Y;28^"
+A$ = A$ + "#THG4d`XRQa6VJaQn1K74PmXjWfYo=1<^J34P=fdo[0:_iX;>j0C<a4[0VNk"
+A$ = A$ + "5HAon34oBR8_c;0UN5Vn04BU%%h1"
 btemp$=""
 FOR i&=1TO LEN(A$) STEP 4:B$=MID$(A$,i&,4)
 IF INSTR(1,B$,"%") THEN
@@ -36,5 +33,5 @@ X$=X$+CHR$(B& AND 255):B&=B&\256
 NEXT:btemp$=btemp$+X$:NEXT
 btemp$=_INFLATE$(btemp$)
 _MEMPUT m, m.OFFSET, btemp$: _MEMFREE m
-__reset& = _COPYIMAGE(v&): _FREEIMAGE v&
+__deletesmall& = _COPYIMAGE(v&): _FREEIMAGE v&
 END FUNCTION
