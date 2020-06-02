@@ -7,10 +7,10 @@ $VERSIONINFO:CompanyName=SpriggsySpriggs
 $VERSIONINFO:FileDescription=BIN2INCLUDE
 $VERSIONINFO:LegalCopyright=(c) 2019-2020 SpriggsySpriggs
 $VERSIONINFO:ProductName=BIN2INCLUDE
-$VERSIONINFO:Web=https://github.com/SpriggsySpriggs/BIN2BAS64
+$VERSIONINFO:Web=https://github.com/SpriggsySpriggs/BIN2INCLUDE
 $VERSIONINFO:Comments=Converts a binary file into an INCLUDE-able
-$VERSIONINFO:FILEVERSION#=2,5,0,0
-$VERSIONINFO:PRODUCTVERSION#=2,5,0,0
+$VERSIONINFO:FILEVERSION#=2,5,0,1
+$VERSIONINFO:PRODUCTVERSION#=2,5,0,1
 '$CONSOLE
 '_CONSOLE ON
 __binary
