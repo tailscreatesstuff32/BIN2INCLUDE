@@ -9,11 +9,12 @@ $VERSIONINFO:LegalCopyright=(c) 2019-2020 SpriggsySpriggs
 $VERSIONINFO:ProductName=BIN2INCLUDE
 $VERSIONINFO:Web=https://github.com/SpriggsySpriggs/BIN2BAS64
 $VERSIONINFO:Comments=Converts a binary file into an INCLUDE-able
-$VERSIONINFO:FILEVERSION#=2,3,0,0
-$VERSIONINFO:PRODUCTVERSION#=2,3,0,0
+$VERSIONINFO:FILEVERSION#=2,5,0,0
+$VERSIONINFO:PRODUCTVERSION#=2,5,0,0
 '$CONSOLE
 '_CONSOLE ON
 __binary
+__makeshortcut
 '$INCLUDE:'Open-SaveFile.BI'
 DEFINT A-Z
 DECLARE FUNCTION E$ (B$)
@@ -42,6 +43,9 @@ SUB __UI_BeforeInit
 END SUB
 
 SUB __UI_OnLoad
+    IF _FILEEXISTS(_DIR$("desktop") + "\BIN2INCLUDE.lnk") = 0 THEN
+        a = make_shortcut(COMMAND$(0), _DIR$("desktop") + "\BIN2INCLUDE.lnk")
+    END IF
     '_TITLE "BIN2INCLUDE"
     Control(OpenBT).HelperCanvas = __opensmall&
     Control(CONVERTBT).HelperCanvas = __convert&
@@ -53,7 +57,7 @@ SUB __UI_OnLoad
     AddItem ListBox1, "Open a file above or drag and drop."
     AddItem ListBox1, "Select BIN2BAS to convert a binary file to BM or select PIC2MEM to convert an image to MEM."
     AddItem ListBox1, "To compile a file that is creating memory errors,"
-    AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2BAS64"
+    AddItem ListBox1, "consult the readme on https://github.com/SpriggsySpriggs/BIN2INCLUDE"
     '_SCREENMOVE _MIDDLE
 END SUB
 
@@ -474,9 +478,7 @@ FUNCTION E$ (B$)
 END FUNCTION
 
 FUNCTION StripDirectory$ (OFile$)
-    DO
-        OFile$ = RIGHT$(OFile$, LEN(OFile$) - INSTR(OFile$, "\"))
-    LOOP WHILE INSTR(OFile$, "\")
+    OFile$ = MID$(OFile$, _INSTRREV(OFile$, "\") + 1)
     StripDirectory = OFile$
 END FUNCTION
 '$INCLUDE:'OpenFile.BM'
@@ -486,3 +488,4 @@ END FUNCTION
 '$INCLUDE:'reset.png.MEM'
 '$INCLUDE:'delete-small.png.MEM'
 '$INCLUDE:'binary.ico.BM'
+'$INCLUDE:'make_shortcut.BM'
