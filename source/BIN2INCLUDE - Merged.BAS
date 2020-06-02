@@ -8716,8 +8716,7 @@ END SUB
     END IF
     END FUNCTION
     $END IF
-$LET REPINC = 1
-FUNCTION String.Replace$ (a AS STRING, b AS STRING, c AS STRING)
+    FUNCTION String.Replace$ (a AS STRING, b AS STRING, c AS STRING)
     j = INSTR(a, b)
     IF j > 0 THEN
         r$ = LEFT$(a, j - 1) + c + String.Replace(RIGHT$(a, LEN(a) - j + 1 - LEN(b)), b, c)
@@ -9121,29 +9120,6 @@ FUNCTION make_shortcut (startLoc AS STRING, saveLoc AS STRING)
     SHELL$ = SHELL$ + " " + "\" + CHR$(34) + saveLoc + "\" + CHR$(34)
     a = _SHELLHIDE(SHELL$)
 END FUNCTION
-$IF REPINC = 0 THEN
-$LET REPINC = 1
-FUNCTION String.Replace$ (a AS STRING, b AS STRING, c AS STRING)
-    j = INSTR(a, b)
-    IF j > 0 THEN
-        r$ = LEFT$(a, j - 1) + c + String.Replace(RIGHT$(a, LEN(a) - j + 1 - LEN(b)), b, c)
-    ELSE
-        r$ = a
-    END IF
-    String.Replace = r$
-END FUNCTION
-FUNCTION String.Remove$ (a AS STRING, b AS STRING)
-    DIM c AS STRING
-    c = ""
-    j = INSTR(a, b)
-    IF j > 0 THEN
-        r$ = LEFT$(a, j - 1) + c + String.Remove(RIGHT$(a, LEN(a) - j + 1 - LEN(b)), b)
-    ELSE
-        r$ = a
-    END IF
-    String.Remove = r$
-END FUNCTION
-    $END IF
 SUB __makeshortcut
 IF _FILEEXISTS("make_shortcut.ps1") = 0 THEN 'remove this line if you are compiling in FreeBasic
 DIM A$
