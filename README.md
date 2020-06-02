@@ -1,4 +1,4 @@
-# BIN2BAS64
+# BIN2INCLUDE
 This is a GUI adaptation of the code made by Dav for QB64 (http://www.qbasicnews.com/dav/files/basfile.bas) (originally in QBasic (http://www.qbasicnews.com/dav/files/bin2bas.bas)) that would turn any file into a .bas file that could then be included in QB64 code to be compiled and create the original file once again.
 This program can accept a drag and drop onto the program window itself.
 This is now a viable option for zipping a file! Thanks, Dav!
